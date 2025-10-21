@@ -5,36 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Project Gmina Siedlce</title>
 <link rel="icon" href="Logosiedlce.png">
-<style>
-/* RESET */
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{overflow-x:hidden;color:#fff;background:#000;}
-/* BACKGROUND */
-.bg1,.bg2{position:fixed;top:0;left:0;width:100%;height:100%;background-size:cover;background-position:center;transition:opacity 2s ease-in-out;z-index:-2;}
-.bg2{opacity:0;z-index:-1;}
-/* HEADER */
-header{position:fixed;top:0;width:100%;padding:20px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,0.5);backdrop-filter:blur(5px);z-index:10;}
-header img.logo{height:70px;}
-.lang{cursor:pointer;font-weight:bold;}
-/* MAIN */
-.main{text-align:center;margin-top:15vh;}
-.main h1{font-size:60px;text-shadow:0 0 20px #000;}
-.countdown{font-size:24px;margin:20px 0;}
-.trello-btn{display:inline-flex;align-items:center;gap:8px;background:rgba(0,0,0,0.5);padding:10px 20px;border-radius:12px;color:#fff;text-decoration:none;transition:0.3s;}
-.trello-btn img{height:30px;vertical-align:middle;}
-.trello-btn:hover{background:rgba(255,255,255,0.2);}
-.section{margin:40px auto;width:80%;max-width:800px;background:rgba(0,0,0,0.7);border-radius:20px;padding:20px;animation:fadeUp 1s ease forwards;opacity:0;transform:translateY(30px);}
-@keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
-/* ADMIN PANEL */
-.admin-panel{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.95);padding:20px;border-radius:20px;width:90%;max-width:600px;z-index:999;}
-textarea{width:100%;height:80px;border-radius:10px;border:none;padding:10px;margin-top:10px;}
-button{cursor:pointer;margin-top:10px;padding:10px 20px;border:none;border-radius:10px;background:#444;color:#fff;transition:0.3s;}
-button:hover{background:#666;}
-/* DISCORD EMBED STYLE */
-.discord-embed{background:rgba(54,57,63,0.9);border-left:5px solid #7289da;padding:15px;border-radius:12px;margin:10px 0;}
-.discord-embed h4{margin-bottom:5px;color:#fff;}
-.discord-embed p{color:#ddd;margin:0;}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -73,88 +44,6 @@ button:hover{background:#666;}
   <button onclick="closePanel()">Zamknij</button>
 </div>
 
-<script>
-// BACKGROUND ANIMATION
-const bg1=document.getElementById('bg1');
-const bg2=document.getElementById('bg2');
-const images=['Fota1.png','Fota2.png','Fota3.png','Fota4.png'];
-let i=0,showingFirst=true;
-bg1.style.backgroundImage=`url('${images[0]}')`;
-setInterval(()=>{
-  i=(i+1)%images.length;
-  if(showingFirst){
-    bg2.style.backgroundImage=`url('${images[i]}')`;
-    bg2.style.opacity=1;
-    setTimeout(()=>{bg1.style.opacity=0;},500);
-  }else{
-    bg1.style.backgroundImage=`url('${images[i]}')`;
-    bg1.style.opacity=1;
-    setTimeout(()=>{bg2.style.opacity=0;},500);
-  }
-  showingFirst=!showingFirst;
-},6000);
-
-// COUNTDOWN
-function countdown(){
-  const endDate=new Date('Nov 10,2025 00:00:00').getTime();
-  const now=new Date().getTime();
-  const diff=endDate-now;
-  if(diff<0){document.getElementById("countdown").innerHTML="Premiera już dostępna!";return;}
-  const days=Math.floor(diff/(1000*60*60*24));
-  const hours=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
-  const minutes=Math.floor((diff%(1000*60*60))/(1000*60));
-  const seconds=Math.floor((diff%(1000*60))/1000);
-  document.getElementById("countdown").innerHTML=`${days}d ${hours}h ${minutes}m ${seconds}s`;
-}
-setInterval(countdown,1000);
-
-// PANEL ADMINA
-let clickCount=0;
-document.getElementById('langBtn').addEventListener('click',()=>{
-  clickCount++;
-  if(clickCount>=6){
-    const pass=prompt("Wpisz hasło administratora:");
-    if(pass==="1234567"){openPanel();}
-    clickCount=0;
-  }
-});
-function openPanel(){document.getElementById('adminPanel').style.display='block';}
-function closePanel(){document.getElementById('adminPanel').style.display='none';}
-
-// OGŁOSZENIA I BANY
-function addAnnouncement(){
-  const text=document.getElementById('newAnn').value.trim();
-  if(!text) return;
-  let list=JSON.parse(localStorage.getItem('announcements')||"[]");
-  list.push({text:text,date:new Date().toLocaleString()});
-  localStorage.setItem('announcements',JSON.stringify(list));
-  showAnnouncements();
-  document.getElementById('newAnn').value='';
-}
-function showAnnouncements(){
-  let list=JSON.parse(localStorage.getItem('announcements')||"[]");
-  const box=document.getElementById('annList');
-  if(list.length===0){box.innerHTML="Brak ogłoszeń";return;}
-  box.innerHTML=list.map(a=>`<div class="discord-embed"><h4>Ogłoszenie: ${a.date}</h4><p>${a.text}</p></div>`).join('');
-}
-showAnnouncements();
-
-function addBan(){
-  const text=document.getElementById('newBan').value.trim();
-  if(!text) return;
-  let list=JSON.parse(localStorage.getItem('bans')||"[]");
-  list.push({text:text,date:new Date().toLocaleString()});
-  localStorage.setItem('bans',JSON.stringify(list));
-  showBans();
-  document.getElementById('newBan').value='';
-}
-function showBans(){
-  let list=JSON.parse(localStorage.getItem('bans')||"[]");
-  const box=document.getElementById('banList');
-  if(list.length===0){box.innerHTML="Brak banów";return;}
-  box.innerHTML=list.map(a=>`<div><b>${a.date}</b><br>${a.text}</div><hr>`).join('');
-}
-showBans();
-</script>
+<script src="script.js"></script>
 </body>
 </html>
