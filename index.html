@@ -1,1 +1,219 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Gmina Siedlce</title>
+<link rel="icon" href="Logosiedlce.png">
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+  color: #fff;
+  background: #000;
+}
+.bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+  transition: background-image 1s ease-in-out;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+}
+.logo {
+  height: 70px;
+}
+.lang {
+  cursor: pointer;
+  font-weight: bold;
+}
+.main {
+  text-align: center;
+  margin-top: 10vh;
+}
+.main h1 {
+  font-size: 60px;
+  text-shadow: 0 0 20px #000;
+}
+.countdown {
+  font-size: 24px;
+  margin: 20px 0;
+}
+button, .trello-btn {
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover, .trello-btn:hover {
+  background: rgba(255,255,255,0.2);
+}
+.trello-btn img {
+  height: 30px;
+  vertical-align: middle;
+}
+.discord {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+.discord iframe {
+  border-radius: 12px;
+}
+.admin-panel {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.9);
+  padding: 20px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 600px;
+  z-index: 999;
+}
+.admin-panel h2 {
+  margin-top: 0;
+  text-align: center;
+}
+textarea {
+  width: 100%;
+  height: 80px;
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+  margin-top: 10px;
+}
+.admin-panel button {
+  margin-top: 10px;
+  width: 100%;
+}
+.section {
+  margin: 40px auto;
+  width: 80%;
+  max-width: 800px;
+  background: rgba(0,0,0,0.6);
+  border-radius: 20px;
+  padding: 20px;
+}
+.section h2 {
+  text-align: center;
+}
+.fade-in {
+  animation: fadein 1s ease forwards;
+}
+@keyframes fadein {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+</style>
+</head>
+<body>
 
+<div class="bg"></div>
+
+<header>
+  <img src="Logosiedlce.png" class="logo">
+  <div class="lang" id="langBtn">PL</div>
+</header>
+
+<section class="main fade-in">
+  <h1>Project Gmina Siedlce</h1>
+  <div class="countdown" id="countdown"></div>
+  <a class="trello-btn" href="https://trello.com" target="_blank">
+    <img src="Trello_icon5.png" alt="Trello"> Trello
+  </a>
+  <div class="discord">
+    <iframe src="https://discord.com/widget?id=1430287032248303618&theme=dark" width="350" height="400" allowtransparency="true" frameborder="0"></iframe>
+  </div>
+</section>
+
+<div class="section fade-in" id="announcements">
+  <h2>Ogłoszenia</h2>
+  <div id="annList">Brak ogłoszeń</div>
+</div>
+
+<div class="section fade-in" id="bans">
+  <h2>Lista banów</h2>
+  <div id="banList">Brak banów</div>
+</div>
+
+<div class="admin-panel" id="adminPanel">
+  <h2>Panel Administratora</h2>
+  <textarea id="newAnn" placeholder="Napisz ogłoszenie..."></textarea>
+  <button onclick="addAnnouncement()">Dodaj ogłoszenie</button>
+  <button onclick="closePanel()">Zamknij</button>
+</div>
+
+<script>
+const bg = document.querySelector('.bg');
+const images = ['Fota1.png','Fota2.png','Fota3.png','Fota4.png'];
+let i = 0;
+setInterval(()=>{
+  i = (i+1)%images.length;
+  bg.style.backgroundImage = `url('${images[i]}')`;
+}, 5000);
+
+function countdown() {
+  const endDate = new Date('Nov 10, 2025 00:00:00').getTime();
+  const now = new Date().getTime();
+  const diff = endDate - now;
+  if(diff < 0) {document.getElementById("countdown").innerHTML = "Premiera już dostępna!"; return;}
+  const days = Math.floor(diff/(1000*60*60*24));
+  const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  const minutes = Math.floor((diff%(1000*60*60))/(1000*60));
+  const seconds = Math.floor((diff%(1000*60))/1000);
+  document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
+setInterval(countdown, 1000);
+
+let clickCount = 0;
+document.getElementById('langBtn').addEventListener('click', ()=>{
+  clickCount++;
+  if(clickCount>=6){
+    const pass = prompt("Wpisz hasło administratora:");
+    if(pass==="1234567"){openPanel();}
+    clickCount=0;
+  }
+});
+
+function openPanel(){
+  document.getElementById('adminPanel').style.display='block';
+}
+function closePanel(){
+  document.getElementById('adminPanel').style.display='none';
+}
+
+function addAnnouncement(){
+  const text = document.getElementById('newAnn').value.trim();
+  if(!text) return;
+  let list = JSON.parse(localStorage.getItem('announcements')||"[]");
+  list.push({text:text, date:new Date().toLocaleString()});
+  localStorage.setItem('announcements', JSON.stringify(list));
+  showAnnouncements();
+  document.getElementById('newAnn').value='';
+}
+
+function showAnnouncements(){
+  let list = JSON.parse(localStorage.getItem('announcements')||"[]");
+  const box = document.getElementById('annList');
+  if(list.length===0){box.innerHTML="Brak ogłoszeń";return;}
+  box.innerHTML = list.map(a=>`<div><b>${a.date}</b><br>${a.text}</div><hr>`).join('');
+}
+showAnnouncements();
+</script>
+
+</body>
+</html>
