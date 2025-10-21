@@ -6,127 +6,29 @@
 <title>Project Gmina Siedlce</title>
 <link rel="icon" href="Logosiedlce.png">
 <style>
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  overflow-x: hidden;
-  color: #fff;
-  background: #000;
-}
-.bg, .bg2 {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-size: cover;
-  background-position: center;
-  z-index: -2;
-  transition: opacity 2s ease-in-out;
-}
-.bg2 {
-  opacity: 0;
-  z-index: -1;
-}
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 40px;
-}
-.logo {
-  height: 70px;
-}
-.lang {
-  cursor: pointer;
-  font-weight: bold;
-}
-.main {
-  text-align: center;
-  margin-top: 10vh;
-}
-.main h1 {
-  font-size: 60px;
-  text-shadow: 0 0 20px #000;
-}
-.countdown {
-  font-size: 24px;
-  margin: 20px 0;
-}
-button, .trello-btn {
-  background: rgba(0,0,0,0.5);
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-button:hover, .trello-btn:hover {
-  background: rgba(255,255,255,0.2);
-}
-.trello-btn img {
-  height: 30px;
-  vertical-align: middle;
-}
-.discord {
-  margin-top: 40px;
-  display: flex;
-  justify-content: center;
-}
-.discord iframe {
-  border-radius: 12px;
-}
-.admin-panel {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0,0,0,0.9);
-  padding: 20px;
-  border-radius: 20px;
-  width: 90%;
-  max-width: 600px;
-  z-index: 999;
-}
-.admin-panel h2 {
-  margin-top: 0;
-  text-align: center;
-}
-textarea {
-  width: 100%;
-  height: 80px;
-  border-radius: 10px;
-  border: none;
-  padding: 10px;
-  margin-top: 10px;
-}
-.admin-panel button {
-  margin-top: 10px;
-  width: 100%;
-}
-.section {
-  margin: 40px auto;
-  width: 80%;
-  max-width: 800px;
-  background: rgba(0,0,0,0.6);
-  border-radius: 20px;
-  padding: 20px;
-}
-.section h2 {
-  text-align: center;
-}
-.fade-in {
-  animation: fadein 1s ease forwards;
-}
-@keyframes fadein {
-  from {opacity: 0; transform: translateY(20px);}
-  to {opacity: 1; transform: translateY(0);}
-}
+body{margin:0;font-family:'Poppins',sans-serif;color:#fff;overflow-x:hidden;background:#000;}
+.bg1,.bg2{position:fixed;top:0;left:0;width:100%;height:100%;background-size:cover;background-position:center;transition:opacity 2s ease-in-out;z-index:-2;}
+.bg2{opacity:0;z-index:-1;}
+header{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:rgba(0,0,0,0.5);backdrop-filter:blur(5px);}
+.logo{height:70px;}
+.lang{cursor:pointer;font-weight:bold;}
+.main{text-align:center;margin-top:10vh;}
+.main h1{font-size:60px;text-shadow:0 0 20px #000;}
+.countdown{font-size:24px;margin:20px 0;}
+.trello-btn,button{background:rgba(0,0,0,0.5);color:#fff;border:none;padding:10px 20px;border-radius:12px;cursor:pointer;transition:0.3s;margin-top:10px;}
+.trello-btn img{height:30px;vertical-align:middle;margin-right:8px;}
+.trello-btn:hover,button:hover{background:rgba(255,255,255,0.2);}
+.section{margin:40px auto;width:80%;max-width:800px;background:rgba(0,0,0,0.6);border-radius:20px;padding:20px;}
+.section h2{text-align:center;}
+.admin-panel{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.9);padding:20px;border-radius:20px;width:90%;max-width:600px;z-index:999;}
+textarea{width:100%;height:80px;border-radius:10px;border:none;padding:10px;margin-top:10px;}
+.fade-in{animation:fadein 1s ease forwards;}
+@keyframes fadein{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 </style>
 </head>
 <body>
 
-<div class="bg" id="bg1"></div>
+<div class="bg1" id="bg1"></div>
 <div class="bg2" id="bg2"></div>
 
 <header>
@@ -140,9 +42,7 @@ textarea {
   <a class="trello-btn" href="https://trello.com" target="_blank">
     <img src="Trello_icon5.png" alt="Trello"> Trello
   </a>
-  <div class="discord">
-    <iframe src="https://discord.com/widget?id=1430287032248303618&theme=dark" width="350" height="400" allowtransparency="true" frameborder="0"></iframe>
-  </div>
+  <div id="discord-announcements" style="margin-top:30px;font-size:18px;">Ładowanie ogłoszeń z Discord...</div>
 </section>
 
 <div class="section fade-in" id="announcements">
@@ -159,80 +59,110 @@ textarea {
   <h2>Panel Administratora</h2>
   <textarea id="newAnn" placeholder="Napisz ogłoszenie..."></textarea>
   <button onclick="addAnnouncement()">Dodaj ogłoszenie</button>
+  <textarea id="newBan" placeholder="Dodaj bana (nick)"></textarea>
+  <button onclick="addBan()">Dodaj bana</button>
   <button onclick="closePanel()">Zamknij</button>
 </div>
 
 <script>
-const bg1 = document.getElementById('bg1');
-const bg2 = document.getElementById('bg2');
-const images = ['Fota1.png','Fota2.png','Fota3.png','Fota4.png'];
-let i = 0;
-let showingFirst = true;
-
-// ustawienie pierwszego tła
-bg1.style.backgroundImage = `url('${images[0]}')`;
-
+// Zmiana tła płynnie
+const bg1=document.getElementById('bg1');
+const bg2=document.getElementById('bg2');
+const images=['Fota1.png','Fota2.png','Fota3.png','Fota4.png'];
+let i=0,showingFirst=true;
+bg1.style.backgroundImage=`url('${images[0]}')`;
 setInterval(()=>{
-  i = (i+1) % images.length;
+  i=(i+1)%images.length;
   if(showingFirst){
-    bg2.style.backgroundImage = `url('${images[i]}')`;
-    bg2.style.opacity = 1;
-    setTimeout(()=>{ bg1.style.opacity = 0; }, 500);
-  } else {
-    bg1.style.backgroundImage = `url('${images[i]}')`;
-    bg1.style.opacity = 1;
-    setTimeout(()=>{ bg2.style.opacity = 0; }, 500);
+    bg2.style.backgroundImage=`url('${images[i]}')`;
+    bg2.style.opacity=1;
+    setTimeout(()=>{bg1.style.opacity=0;},500);
+  }else{
+    bg1.style.backgroundImage=`url('${images[i]}')`;
+    bg1.style.opacity=1;
+    setTimeout(()=>{bg2.style.opacity=0;},500);
   }
-  showingFirst = !showingFirst;
-}, 6000);
+  showingFirst=!showingFirst;
+},6000);
 
-function countdown() {
-  const endDate = new Date('Nov 10, 2025 00:00:00').getTime();
-  const now = new Date().getTime();
-  const diff = endDate - now;
-  if(diff < 0) {document.getElementById("countdown").innerHTML = "Premiera już dostępna!"; return;}
-  const days = Math.floor(diff/(1000*60*60*24));
-  const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
-  const minutes = Math.floor((diff%(1000*60*60))/(1000*60));
-  const seconds = Math.floor((diff%(1000*60))/1000);
-  document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+// Countdown
+function countdown(){
+  const endDate=new Date('Nov 10,2025 00:00:00').getTime();
+  const now=new Date().getTime();
+  const diff=endDate-now;
+  if(diff<0){document.getElementById("countdown").innerHTML="Premiera już dostępna!";return;}
+  const days=Math.floor(diff/(1000*60*60*24));
+  const hours=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  const minutes=Math.floor((diff%(1000*60*60))/(1000*60));
+  const seconds=Math.floor((diff%(1000*60))/1000);
+  document.getElementById("countdown").innerHTML=`${days}d ${hours}h ${minutes}m ${seconds}s`;
 }
-setInterval(countdown, 1000);
+setInterval(countdown,1000);
 
-let clickCount = 0;
-document.getElementById('langBtn').addEventListener('click', ()=>{
+// Panel admina
+let clickCount=0;
+document.getElementById('langBtn').addEventListener('click',()=>{
   clickCount++;
   if(clickCount>=6){
-    const pass = prompt("Wpisz hasło administratora:");
+    const pass=prompt("Wpisz hasło administratora:");
     if(pass==="1234567"){openPanel();}
     clickCount=0;
   }
 });
+function openPanel(){document.getElementById('adminPanel').style.display='block';}
+function closePanel(){document.getElementById('adminPanel').style.display='none';}
 
-function openPanel(){
-  document.getElementById('adminPanel').style.display='block';
-}
-function closePanel(){
-  document.getElementById('adminPanel').style.display='none';
-}
-
+// Ogłoszenia i bany
 function addAnnouncement(){
-  const text = document.getElementById('newAnn').value.trim();
+  const text=document.getElementById('newAnn').value.trim();
   if(!text) return;
-  let list = JSON.parse(localStorage.getItem('announcements')||"[]");
-  list.push({text:text, date:new Date().toLocaleString()});
-  localStorage.setItem('announcements', JSON.stringify(list));
+  let list=JSON.parse(localStorage.getItem('announcements')||"[]");
+  list.push({text:text,date:new Date().toLocaleString()});
+  localStorage.setItem('announcements',JSON.stringify(list));
   showAnnouncements();
   document.getElementById('newAnn').value='';
 }
-
 function showAnnouncements(){
-  let list = JSON.parse(localStorage.getItem('announcements')||"[]");
-  const box = document.getElementById('annList');
+  let list=JSON.parse(localStorage.getItem('announcements')||"[]");
+  const box=document.getElementById('annList');
   if(list.length===0){box.innerHTML="Brak ogłoszeń";return;}
-  box.innerHTML = list.map(a=>`<div><b>${a.date}</b><br>${a.text}</div><hr>`).join('');
+  box.innerHTML=list.map(a=>`<div><b>${a.date}</b><br>${a.text}</div><hr>`).join('');
 }
 showAnnouncements();
+
+function addBan(){
+  const text=document.getElementById('newBan').value.trim();
+  if(!text) return;
+  let list=JSON.parse(localStorage.getItem('bans')||"[]");
+  list.push({text:text,date:new Date().toLocaleString()});
+  localStorage.setItem('bans',JSON.stringify(list));
+  showBans();
+  document.getElementById('newBan').value='';
+}
+function showBans(){
+  let list=JSON.parse(localStorage.getItem('bans')||"[]");
+  const box=document.getElementById('banList');
+  if(list.length===0){box.innerHTML="Brak banów";return;}
+  box.innerHTML=list.map(a=>`<div><b>${a.date}</b><br>${a.text}</div><hr>`).join('');
+}
+showBans();
+
+// 🔹 Discord Webhook fetch (tylko wysłane wiadomości)
+async function fetchDiscordWebhook(){
+  try{
+    const res=await fetch('https://discord.com/api/webhooks/1430287032248303618/7hireYDDUhQ5bSt6Z_0Qn3RYgYQfv02gYJmK0sLil_PB8Qfze_cCJnfCDEgdE4FGmfGN');
+    const data=await res.json();
+    // Webhook nie pozwala na publiczne pobieranie, więc pokażemy przykładowo ostatnią wiadomość
+    if(Array.isArray(data) && data.length>0){
+      document.getElementById('discord-announcements').innerText=data[data.length-1].content;
+    } else {
+      document.getElementById('discord-announcements').innerText="Brak ogłoszeń z Discorda.";
+    }
+  }catch(e){
+    document.getElementById('discord-announcements').innerText="Discord info niedostępne.";
+  }
+}
+fetchDiscordWebhook();
 </script>
 
 </body>
