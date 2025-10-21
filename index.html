@@ -65,7 +65,7 @@ textarea{width:100%;height:80px;border-radius:10px;border:none;padding:10px;marg
 </div>
 
 <script>
-// Zmiana tła płynnie
+// Tła płynnie
 const bg1=document.getElementById('bg1');
 const bg2=document.getElementById('bg2');
 const images=['Fota1.png','Fota2.png','Fota3.png','Fota4.png'];
@@ -146,23 +146,6 @@ function showBans(){
   box.innerHTML=list.map(a=>`<div><b>${a.date}</b><br>${a.text}</div><hr>`).join('');
 }
 showBans();
-
-// 🔹 Discord Webhook fetch (tylko wysłane wiadomości)
-async function fetchDiscordWebhook(){
-  try{
-    const res=await fetch('https://discord.com/api/webhooks/1430287032248303618/7hireYDDUhQ5bSt6Z_0Qn3RYgYQfv02gYJmK0sLil_PB8Qfze_cCJnfCDEgdE4FGmfGN');
-    const data=await res.json();
-    // Webhook nie pozwala na publiczne pobieranie, więc pokażemy przykładowo ostatnią wiadomość
-    if(Array.isArray(data) && data.length>0){
-      document.getElementById('discord-announcements').innerText=data[data.length-1].content;
-    } else {
-      document.getElementById('discord-announcements').innerText="Brak ogłoszeń z Discorda.";
-    }
-  }catch(e){
-    document.getElementById('discord-announcements').innerText="Discord info niedostępne.";
-  }
-}
-fetchDiscordWebhook();
 </script>
 
 </body>
