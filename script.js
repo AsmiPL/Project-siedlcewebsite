@@ -86,26 +86,11 @@ if(countdownEl){
 }
 
 // ----------------------------
-// WIDGET DISCORD
+// ORYGINALNY WIDGET DISCORD (iframe)
 // ----------------------------
-async function loadDiscordWidget(){
-  const widgetBox = document.getElementById('discordWidget');
-  if(!widgetBox) return;
-  try{
-    const response = await fetch('https://discord.com/api/guilds/1333095837084946463/widget.json');
-    const data = await response.json();
-    widgetBox.innerHTML = '';
-    if(data.members && data.members.length > 0){
-      data.members.forEach(member => {
-        const div = document.createElement('div');
-        div.textContent = `${member.username}#${member.discriminator}`;
-        widgetBox.appendChild(div);
-      });
-    } else {
-      widgetBox.textContent = 'Brak członków online';
-    }
-  }catch(e){
-    widgetBox.textContent = 'Nie udało się załadować Discorda';
-  }
-}
-loadDiscordWidget();
+// Nic nie trzeba robić w JS, iframe jest w HTML:
+// <iframe
+//   src="https://discord.com/widget?id=105791989395000832&theme=dark"
+//   width="100%" height="450" allowtransparency="true" frameborder="0"
+//   sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
+// </iframe>
