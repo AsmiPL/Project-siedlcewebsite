@@ -1,37 +1,54 @@
-// Płynne zmiany tła
-const bg = document.getElementById('bg');
-const photos = ['Fota1.png','Fota2.png','Fota3.png','Fota4.png'];
-let index = 0;
-bg.style.backgroundImage = `url('${photos[index]}')`;
-setInterval(() => {
-  index = (index + 1) % photos.length;
-  bg.style.opacity = 0;
-  setTimeout(() => {
-    bg.style.backgroundImage = `url('${photos[index]}')`;
-    bg.style.opacity = 1;
-  }, 1000);
-}, 7000);
+// ===========================
+// Project Gmina Siedlce — script.js
+// ===========================
 
-// Countdown
-function updateCountdown(){
-  const launch = new Date("Oct 25, 2025 18:00:00").getTime();
+// ---------------- Countdown ----------------
+const countdownElement = document.getElementById("countdown");
+const targetDate = new Date("2025-10-25T00:00:00").getTime();
+
+function updateCountdown() {
   const now = new Date().getTime();
-  const diff = launch - now;
-  const c = document.getElementById("countdown");
-  if(diff <= 0){ c.innerText = "Premiera już dostępna!"; return; }
-  const d = Math.floor(diff / (1000*60*60*24));
-  const h = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
-  const m = Math.floor((diff%(1000*60*60))/(1000*60));
-  const s = Math.floor((diff%(1000*60))/1000);
-  c.innerText = `${d}d ${h}h ${m}m ${s}s`;
-}
-setInterval(updateCountdown,1000);
+  const distance = targetDate - now;
 
-// Scroll animation
-const items = document.querySelectorAll('.fade-in');
-window.addEventListener('scroll', ()=>{
-  const trigger = window.innerHeight * 0.85;
-  items.forEach(el=>{
-    if(el.getBoundingClientRect().top < trigger) el.classList.add('visible');
-  });
-});
+  if (distance <= 0) {
+    countdownElement.innerHTML = "<span class='ready'>Premiera już dostępna!</span>";
+    return;
+  }
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  countdownElement.innerHTML = `
+    <div class="count-box"><span>${days}</span><p>Dni</p></div>
+    <div class="count-box"><span>${hours}</span><p>Godzin</p></div>
+    <div class="count-box"><span>${minutes}</span><p>Minut</p></div>
+    <div class="count-box"><span>${seconds}</span><p>Sekund</p></div>
+  `;
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// ---------------- Background Fade ----------------
+const bg1 = document.getElementById("bg1");
+const bg2 = document.getElementById("bg2");
+
+const backgrounds = ["Fota1.png", "Fota2.png", "Fota3.png", "Fota4.png"];
+let currentIndex = 0;
+
+function changeBackground() {
+  currentIndex = (currentIndex + 1) % backgrounds.length;
+  const nextImage = `url(${backgrounds[currentIndex]})`;
+
+  bg2.style.backgroundImage = nextImage;
+  bg2.style.opacity = 1;
+
+  setTimeout(() => {
+    bg1.style.backgroundImage = nextImage;
+    bg2.style.opacity = 0;
+  }, 2000);
+}
+
+setInterval(changeBackground, 8000);
