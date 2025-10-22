@@ -9,44 +9,47 @@
 </head>
 <body>
 
-<audio id="bgMusic" src="music.mp3" autoplay loop></audio>
+<!-- Płynne przesuwające się tło -->
+<div class="bg" id="bg"></div>
 
-<div class="bg"></div>
-<div class="overlay"></div>
-
-<header>
-  <img src="Logosiedlce.png" class="logo" id="logo" alt="Logo">
+<header class="header">
+  <img src="Logosiedlce.png" class="logo" alt="Logo">
+  <h1 class="title glow">Project Gmina Siedlce</h1>
+  <p class="subtitle">Nadchodzi nowa era polskich dróg – <span>25 października 2025</span></p>
+  <div class="countdown pulse" id="countdown"></div>
+  <a href="https://trello.com" target="_blank" class="trello-btn">
+    <img src="Trello_icon5.png" alt="Trello"> Sprawdź Trello
+  </a>
 </header>
 
-<section class="main">
-  <h1 id="title">Project Gmina Siedlce</h1>
-  <div class="countdown" id="countdown"></div>
-  <a class="trello-btn" href="https://trello.com" target="_blank">
-    <img src="Trello_icon5.png" alt="Trello"> Trello
-  </a>
-</section>
+<main>
+  <section class="panel fade-in">
+    <h2>📰 Ogłoszenia</h2>
+    <div class="empty-box">Brak ogłoszeń</div>
+  </section>
 
-<section class="section" id="discordEmbed">
-  <h2>Discord</h2>
-  <iframe src="https://discord.com/widget?id=105791989395000832&theme=dark"
-          width="100%" height="400"
-          allowtransparency="true" frameborder="0"
-          sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-</section>
+  <section class="panel fade-in">
+    <h2>🚫 Lista banów</h2>
+    <div class="empty-box">Brak banów</div>
+  </section>
 
-<footer>© dc frvvnek_</footer>
+  <section class="discord fade-in">
+    <h2>💬 Discord</h2>
+    <iframe 
+      src="https://discord.com/widget?id=105791989395000832&theme=dark" 
+      width="100%" height="450" allowtransparency="true" frameborder="0" 
+      sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
+    </iframe>
+  </section>
+</main>
 
-<!-- Panel Admina -->
-<div id="adminPanel" class="hidden">
-  <div class="panel-content">
-    <h3>Panel administracyjny</h3>
-    <input type="password" id="adminPass" placeholder="Wpisz hasło...">
-    <button id="loginBtn">Zaloguj</button>
-    <div id="adminArea" class="hidden">
-      <p>Puste pole — przyszły panel admina.</p>
-    </div>
-  </div>
-</div>
+<footer>
+  <p>© 2025 Project Gmina Siedlce — dc frvvnek_</p>
+</footer>
+
+<audio id="bgMusic" loop>
+  <source src="bgmusic.mp3" type="audio/mpeg">
+</audio>
 
 <script src="script.js"></script>
 </body>
