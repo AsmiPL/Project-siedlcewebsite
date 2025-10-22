@@ -1,17 +1,17 @@
-// Tło zmienia się płynnie
+// Płynne zmiany zdjęć w tle bez przerw
 const bg = document.getElementById('bg');
 const photos = ['Fota1.png','Fota2.png','Fota3.png','Fota4.png'];
 let index = 0;
-bg.style.backgroundImage = `url('${photos[index]}')`;
 
 setInterval(() => {
   index = (index + 1) % photos.length;
+  const newImg = photos[index];
   bg.style.opacity = 0;
   setTimeout(() => {
-    bg.style.backgroundImage = `url('${photos[index]}')`;
+    bg.style.backgroundImage = `url('${newImg}')`;
     bg.style.opacity = 1;
   }, 1000);
-}, 7000);
+}, 10000);
 
 // Odliczanie do 25 października
 function updateCountdown() {
@@ -29,7 +29,7 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown,1000);
 
-// Animacje scroll
+// Efekt fade przy scrollowaniu
 const items = document.querySelectorAll('.fade-in');
 window.addEventListener('scroll', ()=>{
   const trigger = window.innerHeight * 0.85;
@@ -37,3 +37,10 @@ window.addEventListener('scroll', ()=>{
     if(el.getBoundingClientRect().top < trigger) el.classList.add('visible');
   });
 });
+
+// Dźwięk w tle po kliknięciu
+window.addEventListener('click', ()=>{
+  const audio = document.getElementById('bgMusic');
+  audio.volume = 0.3;
+  audio.play().catch(()=>{});
+},{once:true});
