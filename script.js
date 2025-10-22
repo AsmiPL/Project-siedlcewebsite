@@ -14,7 +14,7 @@ setInterval(() => {
 
 // Countdown
 function updateCountdown(){
-  const launch = new Date("Nov 10, 2025 00:00:00").getTime();
+  const launch = new Date("Oct 25, 2025 18:00:00").getTime();
   const now = new Date().getTime();
   const diff = launch - now;
   const c = document.getElementById("countdown");
