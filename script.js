@@ -1,6 +1,4 @@
 // ----------------------------
-// PŁYNNE ZMIANY TŁA
-// ----------------------------
 const bg = document.getElementById('bg');
 const photos = ['Fota1.png','Fota2.png','Fota3.png','Fota4.png'];
 let index = 0;
@@ -15,8 +13,6 @@ setInterval(() => {
   }, 1000);
 }, 10000);
 
-// ----------------------------
-// LICZNIK DO PREMIERY
 // ----------------------------
 function updateCountdown() {
   const launch = new Date("Oct 25, 2025 00:00:00").getTime();
@@ -35,8 +31,6 @@ updateCountdown();
 setInterval(updateCountdown,1000);
 
 // ----------------------------
-// EFEKT FADE-IN PRZY SCROLL
-// ----------------------------
 const items = document.querySelectorAll('.fade-in');
 window.addEventListener('scroll', ()=>{
   const trigger = window.innerHeight * 0.85;
@@ -46,8 +40,6 @@ window.addEventListener('scroll', ()=>{
 });
 
 // ----------------------------
-// MUZYKA TŁA PO KLIKNIĘCIU
-// ----------------------------
 window.addEventListener('click', ()=>{
   const audio = document.getElementById('bgMusic');
   if(audio) {
@@ -56,8 +48,6 @@ window.addEventListener('click', ()=>{
   }
 },{once:true});
 
-// ----------------------------
-// PANEL ADMINA PO 6 KLIKNIĘCIACH COUNTDOWNU
 // ----------------------------
 let clickCount = 0;
 const countdownEl = document.getElementById('countdown');
@@ -85,8 +75,6 @@ if(countdownEl){
   });
 }
 
-// ----------------------------
-// ORYGINALNY WIDGET DISCORD (iframe)
 // ----------------------------
 // Nic nie trzeba robić w JS, iframe jest w HTML:
 // <iframe
