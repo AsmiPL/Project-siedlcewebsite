@@ -71,7 +71,7 @@ body {
 .title {
   font-size:3.8rem;
   margin-top:20px;
-  text-shadow:0 0 25px rgba(0,255,255,0.9);
+  text-shadow:0 0 25px rgba(255, 0, 0, 1);
   animation:glowPulse 2.5s ease-in-out infinite;
 }
 @keyframes glowPulse {
@@ -133,7 +133,7 @@ body {
   max-width:900px;
   margin:60px auto;
   background:rgba(0,0,0,0.6);
-  border:1px solid rgba(0,255,255,0.3);
+  border:1px solid rgba(255, 0, 0, 1);
   border-radius:25px;
   padding:30px;
   backdrop-filter:blur(10px);
@@ -146,7 +146,7 @@ body {
 }
 .empty-box {
   padding:25px;
-  border:2px dashed rgba(0,255,255,0.3);
+  border:2px dashed rgba(255, 0, 0, 1);
   border-radius:15px;
   color:#bbb;
   font-size:1.1rem;
@@ -179,7 +179,7 @@ footer {
   background:#050505;
   font-size:0.9rem;
   color:#888;
-  border-top:1px solid rgba(255,255,255,0.1);
+  border-top:1px solid rgba(255, 0, 0, 1);
 }
 
 /* Animacje fade */
