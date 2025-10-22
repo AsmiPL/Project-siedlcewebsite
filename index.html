@@ -9,14 +9,20 @@
 </head>
 <body>
 
-<!-- Płynne przesuwające się tło -->
 <div class="bg" id="bg"></div>
 
 <header class="header">
-  <img src="Logosiedlce.png" class="logo" alt="Logo">
+  <img src="Logosiedlce.png" class="logo" id="logo" alt="Logo">
   <h1 class="title glow">Project Gmina Siedlce</h1>
   <p class="subtitle">Nadchodzi nowa era polskich dróg – <span>25 października 2025</span></p>
   <div class="countdown pulse" id="countdown"></div>
+
+  <nav class="menu">
+    <a href="index.html">Strona główna</a>
+    <a href="ogloszenia.html">Ogłoszenia</a>
+    <a href="bany.html">Bany</a>
+  </nav>
+
   <a href="https://trello.com" target="_blank" class="trello-btn">
     <img src="Trello_icon5.png" alt="Trello"> Sprawdź Trello
   </a>
@@ -24,20 +30,15 @@
 
 <main>
   <section class="panel fade-in">
-    <h2>📰 Ogłoszenia</h2>
-    <div class="empty-box">Brak ogłoszeń</div>
-  </section>
-
-  <section class="panel fade-in">
-    <h2>🚫 Lista banów</h2>
-    <div class="empty-box">Brak banów</div>
+    <h2>Witamy na stronie projektu Gmina Siedlce!</h2>
+    <p>Tu znajdziesz wszystkie najważniejsze informacje i aktualności dotyczące projektu.</p>
   </section>
 
   <section class="discord fade-in">
     <h2>💬 Discord</h2>
-    <iframe 
-      src="https://discord.com/widget?id=105791989395000832&theme=dark" 
-      width="100%" height="450" allowtransparency="true" frameborder="0" 
+    <iframe
+      src="https://discord.com/widget?id=105791989395000832&theme=dark"
+      width="100%" height="450" allowtransparency="true" frameborder="0"
       sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
     </iframe>
   </section>
@@ -50,6 +51,11 @@
 <audio id="bgMusic" loop>
   <source src="bgmusic.mp3" type="audio/mpeg">
 </audio>
+
+<!-- PANEL ADMINA -->
+<div id="adminOverlay" class="hidden">
+  <div class="admin-box" id="adminBox"></div>
+</div>
 
 <script src="script.js"></script>
 </body>
