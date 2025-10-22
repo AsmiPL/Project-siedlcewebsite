@@ -1,40 +1,158 @@
-// --- Odliczanie do 25 października ---
-const countdown = document.getElementById("countdown");
-const targetDate = new Date("October 25, 2025 00:00:00").getTime();
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
 
-setInterval(() => {
-  const now = new Date().getTime();
-  const distance = targetDate - now;
+* {margin:0;padding:0;box-sizing:border-box;}
+body {
+  font-family:'Poppins',sans-serif;
+  color:#fff;
+  background:#000;
+  overflow-x:hidden;
+}
 
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+/* ANIMOWANE TŁO */
+.bg {
+  position:fixed;
+  inset:0;
+  background-image:url('Fota1.png');
+  background-size:cover;
+  background-position:center;
+  transition:opacity 2s ease-in-out;
+  animation:scroll-bg 30s linear infinite;
+  z-index:-1;
+}
 
-  countdown.textContent = `${days}D ${hours}G ${minutes}M ${seconds}S`;
-}, 1000);
+@keyframes scroll-bg {
+  from {background-position:0 0;}
+  to {background-position:-2000px 0;}
+}
 
-// --- Panel admina ---
-const logo = document.getElementById("logo");
-const adminPanel = document.getElementById("adminPanel");
-const loginBtn = document.getElementById("loginBtn");
-const adminArea = document.getElementById("adminArea");
-const adminPass = document.getElementById("adminPass");
+/* HEADER */
+.header {
+  text-align:center;
+  padding:100px 20px 60px;
+}
+.logo {
+  width:160px;
+  filter:drop-shadow(0 0 20px rgba(0,255,255,0.8));
+  animation:float 4s ease-in-out infinite;
+}
+@keyframes float {
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-10px);}
+}
 
-let clickCount = 0;
+.title {
+  font-size:3.8rem;
+  margin-top:20px;
+  text-shadow:0 0 25px rgba(0,255,255,0.9);
+  animation:glowPulse 2.5s ease-in-out infinite;
+}
+@keyframes glowPulse {
+  0%,100% {text-shadow:0 0 25px rgba(0,255,255,0.9);}
+  50% {text-shadow:0 0 60px rgba(0,255,255,1);}
+}
 
-logo.addEventListener("click", () => {
-  clickCount++;
-  if (clickCount === 5) {
-    adminPanel.classList.remove("hidden");
-    clickCount = 0;
-  }
-});
+.subtitle {
+  font-size:1.3rem;
+  margin:15px 0 25px;
+  color:#ccc;
+}
+.subtitle span {
+  color:#00ffff;
+  font-weight:700;
+}
 
-loginBtn.addEventListener("click", () => {
-  if (adminPass.value === "asmi123") {
-    adminArea.classList.remove("hidden");
-  } else {
-    alert("Nieprawidłowe hasło!");
-  }
-});
+.countdown {
+  font-size:2.3rem;
+  font-weight:700;
+  margin:20px 0;
+  text-shadow:0 0 25px #00ffff;
+  padding:14px 28px;
+  border:2px solid #00ffff;
+  border-radius:12px;
+  display:inline-block;
+  background:rgba(0,0,0,0.45);
+  animation:pulseAnim 1.3s infinite;
+}
+@keyframes pulseAnim {
+  0%,100% {transform:scale(1);}
+  50% {transform:scale(1.06);}
+}
+
+.trello-btn {
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background:rgba(0,0,0,0.5);
+  padding:12px 25px;
+  border-radius:12px;
+  text-decoration:none;
+  color:#fff;
+  border:2px solid #00ffff;
+  transition:all .3s;
+}
+.trello-btn img {height:28px;}
+.trello-btn:hover {
+  background:#00ffff;
+  color:#000;
+  box-shadow:0 0 25px #00ffff;
+}
+
+/* PANEL */
+.panel {
+  width:90%;
+  max-width:900px;
+  margin:60px auto;
+  background:rgba(0,0,0,0.6);
+  border:1px solid rgba(0,255,255,0.3);
+  border-radius:25px;
+  padding:30px;
+  backdrop-filter:blur(10px);
+  text-align:center;
+}
+.panel h2 {
+  margin-bottom:20px;
+  font-size:1.8rem;
+  text-shadow:0 0 12px #00ffff;
+}
+.empty-box {
+  padding:25px;
+  border:2px dashed rgba(0,255,255,0.3);
+  border-radius:15px;
+  color:#bbb;
+  font-size:1.1rem;
+}
+
+/* DISCORD */
+.discord {
+  width:90%;
+  max-width:900px;
+  margin:60px auto;
+}
+.discord h2 {
+  text-shadow:0 0 12px #5865F2;
+  margin-bottom:15px;
+}
+.discord iframe {
+  border-radius:20px;
+}
+
+/* FOOTER */
+footer {
+  text-align:center;
+  padding:25px;
+  background:#050505;
+  font-size:0.9rem;
+  color:#888;
+  border-top:1px solid rgba(255,255,255,0.1);
+}
+
+/* Animacje fade */
+.fade-in {
+  opacity:0;
+  transform:translateY(40px);
+  transition:opacity 1.2s ease, transform 1.2s ease;
+}
+.fade-in.visible {
+  opacity:1;
+  transform:translateY(0);
+}
