@@ -16,13 +16,7 @@ body {
   background-size:cover;
   background-position:center;
   transition:opacity 2s ease-in-out;
-  animation:scroll-bg 30s linear infinite;
   z-index:-1;
-}
-
-@keyframes scroll-bg {
-  from {background-position:0 0;}
-  to {background-position:-2000px 0;}
 }
 
 /* HEADER */
@@ -35,10 +29,7 @@ body {
   filter:drop-shadow(0 0 20px rgba(0,255,255,0.8));
   animation:float 4s ease-in-out infinite;
 }
-@keyframes float {
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(-10px);}
-}
+@keyframes float {0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
 
 .title {
   font-size:3.8rem;
@@ -46,113 +37,33 @@ body {
   text-shadow:0 0 25px rgba(0,255,255,0.9);
   animation:glowPulse 2.5s ease-in-out infinite;
 }
-@keyframes glowPulse {
-  0%,100% {text-shadow:0 0 25px rgba(0,255,255,0.9);}
-  50% {text-shadow:0 0 60px rgba(0,255,255,1);}
-}
+@keyframes glowPulse {0%,100% {text-shadow:0 0 25px rgba(0,255,255,0.9);}50% {text-shadow:0 0 60px rgba(0,255,255,1);}}
 
-.subtitle {
-  font-size:1.3rem;
-  margin:15px 0 25px;
-  color:#ccc;
-}
-.subtitle span {
-  color:#00ffff;
-  font-weight:700;
-}
+.subtitle {font-size:1.3rem;margin:15px 0 25px;color:#ccc;}
+.subtitle span {color:#00ffff;font-weight:700;}
 
 .countdown {
-  font-size:2.3rem;
-  font-weight:700;
-  margin:20px 0;
+  font-size:2.3rem;font-weight:700;margin:20px 0;
   text-shadow:0 0 25px #00ffff;
-  padding:14px 28px;
-  border:2px solid #00ffff;
-  border-radius:12px;
-  display:inline-block;
-  background:rgba(0,0,0,0.45);
+  padding:14px 28px;border:2px solid #00ffff;border-radius:12px;
+  display:inline-block;background:rgba(0,0,0,0.45);
   animation:pulseAnim 1.3s infinite;
 }
-@keyframes pulseAnim {
-  0%,100% {transform:scale(1);}
-  50% {transform:scale(1.06);}
-}
+@keyframes pulseAnim {0%,100% {transform:scale(1);}50% {transform:scale(1.06);}}
 
-.trello-btn {
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  background:rgba(0,0,0,0.5);
-  padding:12px 25px;
-  border-radius:12px;
-  text-decoration:none;
-  color:#fff;
-  border:2px solid #00ffff;
-  transition:all .3s;
-}
+.menu {margin:20px 0;}
+.menu a {margin:0 10px;color:#00ffff;text-decoration:none;font-weight:600;transition:0.3s;}
+.menu a:hover {color:#fff;}
+
+.trello-btn {display:inline-flex;align-items:center;gap:10px;background:rgba(0,0,0,0.5);padding:12px 25px;border-radius:12px;text-decoration:none;color:#fff;border:2px solid #00ffff;transition:all .3s;}
 .trello-btn img {height:28px;}
-.trello-btn:hover {
-  background:#00ffff;
-  color:#000;
-  box-shadow:0 0 25px #00ffff;
-}
+.trello-btn:hover {background:#00ffff;color:#000;box-shadow:0 0 25px #00ffff;}
 
 /* PANEL */
 .panel {
-  width:90%;
-  max-width:900px;
-  margin:60px auto;
-  background:rgba(0,0,0,0.6);
-  border:1px solid rgba(0,255,255,0.3);
-  border-radius:25px;
-  padding:30px;
-  backdrop-filter:blur(10px);
-  text-align:center;
+  width:90%;max-width:900px;margin:60px auto;
+  background:rgba(0,0,0,0.6);border:1px solid rgba(0,255,255,0.3);
+  border-radius:25px;padding:30px;backdrop-filter:blur(10px);text-align:center;
 }
-.panel h2 {
-  margin-bottom:20px;
-  font-size:1.8rem;
-  text-shadow:0 0 12px #00ffff;
-}
-.empty-box {
-  padding:25px;
-  border:2px dashed rgba(0,255,255,0.3);
-  border-radius:15px;
-  color:#bbb;
-  font-size:1.1rem;
-}
-
-/* DISCORD */
-.discord {
-  width:90%;
-  max-width:900px;
-  margin:60px auto;
-}
-.discord h2 {
-  text-shadow:0 0 12px #5865F2;
-  margin-bottom:15px;
-}
-.discord iframe {
-  border-radius:20px;
-}
-
-/* FOOTER */
-footer {
-  text-align:center;
-  padding:25px;
-  background:#050505;
-  font-size:0.9rem;
-  color:#888;
-  border-top:1px solid rgba(255,255,255,0.1);
-}
-
-/* Animacje fade */
-.fade-in {
-  opacity:0;
-  transform:translateY(40px);
-  transition:opacity 1.2s ease, transform 1.2s ease;
-}
-.fade-in.visible {
-  opacity:1;
-  transform:translateY(0);
-}
+.panel h2 {margin-bottom:20px;font-size:1.8rem;text-shadow:0 0 12px #00ffff;}
+.empty-box {padding:25px;border:2px dashed rgba(0,255,255,0.3);border-radius
