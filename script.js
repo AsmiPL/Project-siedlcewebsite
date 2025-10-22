@@ -1,31 +1,39 @@
-// === USTAWIENIE DATY KOŃCOWEJ ===
-const countdownDate = new Date("October 25, 2025 00:00:00").getTime();
-const countdownElement = document.getElementById("countdown");
+// Tło zmienia się płynnie
+const bg = document.getElementById('bg');
+const photos = ['Fota1.png','Fota2.png','Fota3.png','Fota4.png'];
+let index = 0;
+bg.style.backgroundImage = `url('${photos[index]}')`;
 
-// === FUNKCJA AKTUALIZUJĄCA ODLICZANIE ===
+setInterval(() => {
+  index = (index + 1) % photos.length;
+  bg.style.opacity = 0;
+  setTimeout(() => {
+    bg.style.backgroundImage = `url('${photos[index]}')`;
+    bg.style.opacity = 1;
+  }, 1000);
+}, 7000);
+
+// Odliczanie do 25 października
 function updateCountdown() {
+  const launch = new Date("Oct 25, 2025 00:00:00").getTime();
   const now = new Date().getTime();
-  const distance = countdownDate - now;
-
-  if (distance < 0) {
-    countdownElement.innerHTML = "🎉 Wydarzenie rozpoczęte!";
-    countdownElement.classList.add("ended");
-    return;
-  }
-
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-  countdownElement.innerHTML = `
-    <div class="count-box">${days}<span>D</span></div>
-    <div class="count-box">${hours}<span>G</span></div>
-    <div class="count-box">${minutes}<span>M</span></div>
-    <div class="count-box">${seconds}<span>S</span></div>
-  `;
+  const diff = launch - now;
+  const c = document.getElementById("countdown");
+  if(diff <= 0){ c.innerText = "Premiera już dostępna!"; return; }
+  const d = Math.floor(diff / (1000*60*60*24));
+  const h = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  const m = Math.floor((diff%(1000*60*60))/(1000*60));
+  const s = Math.floor((diff%(1000*60))/1000);
+  c.innerText = `${d}D ${h}G ${m}M ${s}S`;
 }
-
-// === ODPALENIE ODLICZANIA CO SEKUNDĘ ===
-setInterval(updateCountdown, 1000);
 updateCountdown();
+setInterval(updateCountdown,1000);
+
+// Animacje scroll
+const items = document.querySelectorAll('.fade-in');
+window.addEventListener('scroll', ()=>{
+  const trigger = window.innerHeight * 0.85;
+  items.forEach(el=>{
+    if(el.getBoundingClientRect().top < trigger) el.classList.add('visible');
+  });
+});
