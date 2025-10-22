@@ -1,59 +1,51 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project Gmina Siedlce</title>
-  <link rel="icon" href="Logosiedlce.png">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Gmina Siedlce</title>
+<link rel="icon" href="Logosiedlce.png">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="bg" id="bg"></div>
+<!-- Płynne tło -->
+<div class="bg" id="bg"></div>
 
-  <header class="header">
-    <img src="Logosiedlce.png" alt="Logo" class="logo">
-    <h1 class="title">Project Gmina Siedlce</h1>
-  </header>
+<header class="header">
+  <img src="Logosiedlce.png" class="logo" alt="Logo">
+  <h1 class="title">Project Gmina Siedlce</h1>
+  <p class="subtitle">Nadchodzi nowa era polskich dróg – <span>25 października 2025</span></p>
+  <div class="countdown" id="countdown"></div>
+  <a href="https://trello.com" target="_blank" class="trello-btn">
+    <img src="Trello_icon5.png" alt="Trello"> Sprawdź Trello
+  </a>
+</header>
 
-  <main>
-    <section class="intro fade-in">
-      <p class="subtitle">
-        Nadchodzi nowa era polskich dróg.<br>
-        Odkryj Siedlce jak nigdy dotąd — <span>25 października 2025</span>.
-      </p>
+<main>
+  <section class="panel fade-in">
+    <h2>📰 Ogłoszenia</h2>
+    <div class="empty-box">Brak ogłoszeń</div>
+  </section>
 
-      <div id="countdown" class="countdown"></div>
+  <section class="panel fade-in">
+    <h2>🚫 Lista banów</h2>
+    <div class="empty-box">Brak banów</div>
+  </section>
 
-      <a href="https://trello.com" target="_blank" class="trello-btn">
-        <img src="Trello_icon5.png" alt="Trello"> Sprawdź Trello
-      </a>
-    </section>
+  <section class="discord fade-in">
+    <h2>💬 Discord</h2>
+    <iframe src="https://discord.com/widget?id=105791989395000832&theme=dark" 
+      width="100%" height="450" allowtransparency="true" frameborder="0" 
+      sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
+    </iframe>
+  </section>
+</main>
 
-    <section class="panel fade-in">
-      <h2>📰 Ogłoszenia</h2>
-      <div class="empty-box">Brak ogłoszeń</div>
-    </section>
+<footer>
+  <p>© 2025 Project Gmina Siedlce — dc frvvnek_</p>
+</footer>
 
-    <section class="panel fade-in">
-      <h2>🚫 Lista banów</h2>
-      <div class="empty-box">Brak banów</div>
-    </section>
-
-    <section class="discord fade-in">
-      <h2>💬 Discord</h2>
-      <iframe 
-        src="https://discord.com/widget?id=105791989395000832&theme=dark" 
-        width="100%" height="400" allowtransparency="true" frameborder="0" 
-        sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
-      </iframe>
-    </section>
-  </main>
-
-  <footer>
-    <p>© 2025 dc frvvnek_ — Wszystkie prawa zastrzeżone</p>
-  </footer>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
