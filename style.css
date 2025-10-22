@@ -1,145 +1,46 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
+// Płynne zmiany zdjęć w tle bez przerw
+const bg = document.getElementById('bg');
+const photos = ['Fota1.png','Fota2.png','Fota3.png','Fota4.png'];
+let index = 0;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Orbitron', sans-serif;
-}
+setInterval(() => {
+  index = (index + 1) % photos.length;
+  const newImg = photos[index];
+  bg.style.opacity = 0;
+  setTimeout(() => {
+    bg.style.backgroundImage = `url('${newImg}')`;
+    bg.style.opacity = 1;
+  }, 1000);
+}, 10000);
 
-body {
-  background: black;
-  color: white;
-  overflow-x: hidden;
-  text-align: center;
+// Odliczanie do 25 października
+function updateCountdown() {
+  const launch = new Date("Oct 25, 2025 00:00:00").getTime();
+  const now = new Date().getTime();
+  const diff = launch - now;
+  const c = document.getElementById("countdown");
+  if(diff <= 0){ c.innerText = "Premiera już dostępna!"; return; }
+  const d = Math.floor(diff / (1000*60*60*24));
+  const h = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  const m = Math.floor((diff%(1000*60*60))/(1000*60));
+  const s = Math.floor((diff%(1000*60))/1000);
+  c.innerText = `${d}D ${h}G ${m}M ${s}S`;
 }
+updateCountdown();
+setInterval(updateCountdown,1000);
 
-/* Tło przesuwające się */
-.bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 200%;
-  height: 100%;
-  background: url('Fota1.png') repeat-x center/cover;
-  animation: moveBg 30s linear infinite;
-  z-index: -2;
-}
+// Efekt fade przy scrollowaniu
+const items = document.querySelectorAll('.fade-in');
+window.addEventListener('scroll', ()=>{
+  const trigger = window.innerHeight * 0.85;
+  items.forEach(el=>{
+    if(el.getBoundingClientRect().top < trigger) el.classList.add('visible');
+  });
+});
 
-@keyframes moveBg {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  z-index: -1;
-}
-
-.logo {
-  width: 120px;
-  margin: 30px auto;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-.logo:hover { transform: scale(1.1); }
-
-.main h1 {
-  font-size: 3rem;
-  color: #00e1ff;
-  text-shadow: 0 0 20px #00e1ff;
-  animation: glowTitle 2s infinite alternate;
-}
-
-@keyframes glowTitle {
-  from { text-shadow: 0 0 10px #00e1ff; opacity: 0.9; }
-  to { text-shadow: 0 0 30px #00ffff; opacity: 1; }
-}
-
-.countdown {
-  margin: 30px 0;
-  font-size: 2rem;
-  color: #00ffe0;
-  animation: blink 1s infinite alternate;
-}
-
-@keyframes blink {
-  from { opacity: 0.8; }
-  to { opacity: 1; }
-}
-
-.trello-btn {
-  display: inline-flex;
-  align-items: center;
-  background: #0079bf;
-  color: white;
-  padding: 12px 25px;
-  border-radius: 10px;
-  text-decoration: none;
-  box-shadow: 0 0 20px #00baff;
-  transition: transform 0.2s;
-}
-.trello-btn:hover { transform: scale(1.05); }
-
-.section {
-  margin-top: 80px;
-  padding: 20px;
-}
-
-footer {
-  margin: 40px 0;
-  color: #888;
-  font-size: 0.9rem;
-}
-
-/* Panel admina */
-#adminPanel {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  display: flex; justify-content: center; align-items: center;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(5px);
-  z-index: 1000;
-}
-#adminPanel.hidden { display: none; }
-
-.panel-content {
-  background: rgba(20,20,20,0.9);
-  border: 2px solid #00e1ff;
-  border-radius: 15px;
-  padding: 30px;
-  width: 400px;
-  text-align: center;
-  box-shadow: 0 0 30px #00e1ff;
-}
-#adminArea {
-  margin-top: 20px;
-}
-#adminArea.hidden { display: none; }
-
-input {
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #00e1ff;
-  background: #000;
-  color: white;
-  outline: none;
-  margin-top: 10px;
-}
-button {
-  background: #00e1ff;
-  color: black;
-  border: none;
-  margin-top: 10px;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-button:hover { background: #00ffff; }
+// Dźwięk w tle po kliknięciu
+window.addEventListener('click', ()=>{
+  const audio = document.getElementById('bgMusic');
+  audio.volume = 0.3;
+  audio.play().catch(()=>{});
+},{once:true});
