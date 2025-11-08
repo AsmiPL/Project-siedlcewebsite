@@ -36,7 +36,14 @@
 
   <section class="discord fade-in">
     <h2>💬 Discord Live</h2>
-    <div id="discordWidget" class="discord-widget">Ładowanie danych Discord...</div>
+    <div class="discord-embed">
+      <iframe 
+        src="https://discord.com/widget?id=1333095837084946463&theme=dark" 
+        allowtransparency="true" 
+        frameborder="0"
+        sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
+      </iframe>
+    </div>
   </section>
 
   <!-- ADMIN PANEL SECTION (hidden until login) -->
@@ -63,12 +70,12 @@
         </div>
       </div>
 
-      <!-- USERS TAB (placeholder) -->
+      <!-- USERS TAB -->
       <div class="tab" id="users" style="display:none;">
         <p>Lista użytkowników / statystyki (w przyszłości)</p>
       </div>
 
-      <!-- SETTINGS TAB (placeholder) -->
+      <!-- SETTINGS TAB -->
       <div class="tab" id="settings" style="display:none;">
         <p>Ustawienia administracyjne</p>
       </div>
@@ -84,9 +91,10 @@
   <source src="bgmusic.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Hidden admin login modal (created dynamically by script) -->
 <div id="adminOverlay" class="hidden"></div>
 
 <script src="script.js"></script>
 </body>
+</html>
+
 </html>
