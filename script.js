@@ -1,57 +1,101 @@
-// script.js
-document.addEventListener("DOMContentLoaded", () => {
-  // === COUNTDOWN ===
-  const countdownEl = document.getElementById("countdown");
-  const targetDate = new Date("Dec 1, 2025 15:00:00").getTime();
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Project Gmina Siedlce</title>
+<link rel="icon" href="Logosiedlce.png" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
-  setInterval(() => {
-    const now = Date.now();
-    const d = Math.max(0, targetDate - now);
-    const days = Math.floor(d / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((d % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((d % (1000 * 60)) / 1000);
-    countdownEl.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-  }, 1000);
+<div class="bg" id="bg"></div>
 
-  // === SECRET ADMIN OPEN ===
-  let clickCount = 0;
-  countdownEl.addEventListener("click", () => {
-    clickCount++;
-    if (clickCount >= 5) {
-      clickCount = 0;
-      showLoginModal();
-    }
-  });
+<header class="header">
+  <nav class="menu-top">
+    <a href="index.html">Strona główna</a>
+    <a href="ogloszenia.html">Ogłoszenia</a>
+    <a href="bany.html">Bany</a>
+  </nav>
 
-  function showLoginModal() {
-    const overlay = document.getElementById("adminOverlay");
-    overlay.innerHTML = `
-      <div class="admin-modal" style="background:rgba(0,0,0,0.86);position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:99999;">
-        <div style="max-width:360px;width:94%;background:#111;padding:20px;border-radius:12px;">
-          <h3 style="color:#fff;text-align:center;margin-bottom:10px;">Admin Login</h3>
-          <input id="loginUser" placeholder="Username" style="width:100%;padding:10px;border-radius:8px;margin-bottom:8px;background:#222;color:#fff;border:1px solid #333;">
-          <input id="loginPass" placeholder="Password" type="password" style="width:100%;padding:10px;border-radius:8px;margin-bottom:12px;background:#222;color:#fff;border:1px solid #333;">
-          <div style="display:flex;gap:10px;justify-content:center;">
-            <button id="loginCancel" style="padding:8px 14px;border-radius:8px;background:#555;color:#fff;border:none;cursor:pointer;">Anuluj</button>
-            <button id="loginSend" style="padding:8px 14px;border-radius:8px;background:#00ffff;color:#000;border:none;font-weight:700;cursor:pointer;">Zaloguj</button>
-          </div>
+  <img src="Logosiedlce.png" class="logo" id="logo" alt="Logo" />
+  <h1 class="title glow">Project Gmina Siedlce</h1>
+  <p class="subtitle">Nadchodzi nowa era polskich dróg – <span>05 grudnia 2025</span></p>
+  <div class="countdown pulse" id="countdown">—</div>
+
+  <a href="https://trello.com" target="_blank" class="trello-btn">
+    <img src="Trello_icon5.png" alt="Trello" /> Sprawdź Trello
+  </a>
+</header>
+
+<main>
+  <section class="panel fade-in">
+    <h2>Witamy na stronie projektu Gmina Siedlce!</h2>
+    <p>Tu znajdziesz wszystkie najważniejsze informacje i aktualności dotyczące projektu.</p>
+  </section>
+
+  <section class="discord fade-in">
+    <h2>💬 Discord Live</h2>
+    <div class="discord-embed">
+      <a href="https://discord.gg/twojLink" target="_blank" class="discord-card">
+        <img src="https://cdn.discordapp.com/icons/1333095837084946463/a_12345example.gif?size=128" alt="Discord Logo">
+        <div class="discord-info">
+          <h3>Gmina Siedlce Community</h3>
+          <p>Dołącz do naszej społeczności!</p>
+          <span>➡️ Kliknij, aby wejść</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ADMIN PANEL SECTION (hidden until login) -->
+  <section id="adminSection" class="panel fade-in hidden">
+    <h2>Admin Panel</h2>
+    <div class="admin-tabs">
+      <button class="tab-btn active" data-tab="bans">Bany</button>
+      <button class="tab-btn" data-tab="users">Użytkownicy</button>
+      <button class="tab-btn" data-tab="settings">Ustawienia</button>
+    </div>
+
+    <div class="admin-content">
+      <!-- BANS TAB -->
+      <div class="tab" id="bans" style="display:block;">
+        <h3>Lista banów</h3>
+        <div id="bansList" class="empty-box">Brak banów</div>
+
+        <h4>Dodaj bana</h4>
+        <div class="admin-form">
+          <input type="text" id="banUser" placeholder="Nick / ID" />
+          <input type="text" id="banReason" placeholder="Powód bana" />
+          <input type="date" id="banExpiry" />
+          <button id="addBanBtn">Dodaj bana</button>
         </div>
       </div>
-    `;
-    overlay.classList.remove("hidden");
 
-    document.getElementById("loginCancel").addEventListener("click", () => {
-      overlay.classList.add("hidden");
-      overlay.innerHTML = "";
-    });
+      <!-- USERS TAB (placeholder) -->
+      <div class="tab" id="users" style="display:none;">
+        <p>Lista użytkowników / statystyki (w przyszłości)</p>
+      </div>
 
-    document.getElementById("loginSend").addEventListener("click", async () => {
-      const username = document.getElementById("loginUser").value.trim();
-      const password = document.getElementById("loginPass").value;
-      if (!username || !password) { alert("Wypełnij pola"); return; }
+      <!-- SETTINGS TAB (placeholder) -->
+      <div class="tab" id="settings" style="display:none;">
+        <p>Ustawienia administracyjne</p>
+      </div>
+    </div>
+  </section>
+</main>
 
-      try {
-        const res = await fetch("/api/login", {
-          method:
+<footer>
+  <p>© 2025 Project Gmina Siedlce — dc frvvnek_</p>
+</footer>
 
+<audio id="bgMusic" loop>
+  <source src="bgmusic.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Hidden admin login modal (created dynamically by script) -->
+<div id="adminOverlay" class="hidden"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
