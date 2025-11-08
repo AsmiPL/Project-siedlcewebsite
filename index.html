@@ -37,14 +37,19 @@
   <section class="discord fade-in">
     <h2>💬 Discord Live</h2>
     <div class="discord-embed">
-      <a href="https://discord.gg/twojLink" target="_blank" class="discord-card">
-        <img src="https://cdn.discordapp.com/icons/1333095837084946463/a_12345example.gif?size=128" alt="Discord Logo">
-        <div class="discord-info">
-          <h3>Gmina Siedlce Community</h3>
-          <p>Dołącz do naszej społeczności!</p>
-          <span>➡️ Kliknij, aby wejść</span>
-        </div>
-      </a>
+      <iframe 
+        src="https://discord.com/widget?id=1333095837084946463&theme=dark"
+        width="100%" 
+        height="500" 
+        allowtransparency="true" 
+        frameborder="0"
+        allow="clipboard-write; fullscreen; picture-in-picture"
+        referrerpolicy="no-referrer"
+        sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
+      </iframe>
+    </div>
+    <div id="discordWidget" class="discord-widget">
+      <p>Ładowanie danych z Discorda...</p>
     </div>
   </section>
 
@@ -58,7 +63,6 @@
     </div>
 
     <div class="admin-content">
-      <!-- BANS TAB -->
       <div class="tab" id="bans" style="display:block;">
         <h3>Lista banów</h3>
         <div id="bansList" class="empty-box">Brak banów</div>
@@ -72,12 +76,10 @@
         </div>
       </div>
 
-      <!-- USERS TAB (placeholder) -->
       <div class="tab" id="users" style="display:none;">
         <p>Lista użytkowników / statystyki (w przyszłości)</p>
       </div>
 
-      <!-- SETTINGS TAB (placeholder) -->
       <div class="tab" id="settings" style="display:none;">
         <p>Ustawienia administracyjne</p>
       </div>
@@ -93,9 +95,9 @@
   <source src="bgmusic.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Hidden admin login modal (created dynamically by script) -->
 <div id="adminOverlay" class="hidden"></div>
 
 <script src="script.js"></script>
 </body>
 </html>
+
