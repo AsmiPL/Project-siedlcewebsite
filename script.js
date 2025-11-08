@@ -1,101 +1,33 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Project Gmina Siedlce</title>
-<link rel="icon" href="Logosiedlce.png" />
-<link rel="stylesheet" href="style.css" />
-</head>
-<body>
+document.addEventListener("DOMContentLoaded", () => {
+  const countdownEl = document.getElementById("countdown");
+  const targetDate = new Date("Dec 5, 2025 15:00:00").getTime();
 
-<div class="bg" id="bg"></div>
+  // === COUNTDOWN ===
+  setInterval(() => {
+    const now = Date.now();
+    const d = Math.max(0, targetDate - now);
+    const days = Math.floor(d / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((d % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((d % (1000 * 60)) / 1000);
+    countdownEl.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }, 1000);
 
-<header class="header">
-  <nav class="menu-top">
-    <a href="index.html">Strona główna</a>
-    <a href="ogloszenia.html">Ogłoszenia</a>
-    <a href="bany.html">Bany</a>
-  </nav>
-
-  <img src="Logosiedlce.png" class="logo" id="logo" alt="Logo" />
-  <h1 class="title glow">Project Gmina Siedlce</h1>
-  <p class="subtitle">Nadchodzi nowa era polskich dróg – <span>05 grudnia 2025</span></p>
-  <div class="countdown pulse" id="countdown">—</div>
-
-  <a href="https://trello.com" target="_blank" class="trello-btn">
-    <img src="Trello_icon5.png" alt="Trello" /> Sprawdź Trello
-  </a>
-</header>
-
-<main>
-  <section class="panel fade-in">
-    <h2>Witamy na stronie projektu Gmina Siedlce!</h2>
-    <p>Tu znajdziesz wszystkie najważniejsze informacje i aktualności dotyczące projektu.</p>
-  </section>
-
-  <section class="discord fade-in">
-    <h2>💬 Discord Live</h2>
-    <div class="discord-embed">
-      <a href="https://discord.gg/twojLink" target="_blank" class="discord-card">
-        <img src="https://cdn.discordapp.com/icons/1333095837084946463/a_12345example.gif?size=128" alt="Discord Logo">
-        <div class="discord-info">
-          <h3>Gmina Siedlce Community</h3>
-          <p>Dołącz do naszej społeczności!</p>
-          <span>➡️ Kliknij, aby wejść</span>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <!-- ADMIN PANEL SECTION (hidden until login) -->
-  <section id="adminSection" class="panel fade-in hidden">
-    <h2>Admin Panel</h2>
-    <div class="admin-tabs">
-      <button class="tab-btn active" data-tab="bans">Bany</button>
-      <button class="tab-btn" data-tab="users">Użytkownicy</button>
-      <button class="tab-btn" data-tab="settings">Ustawienia</button>
-    </div>
-
-    <div class="admin-content">
-      <!-- BANS TAB -->
-      <div class="tab" id="bans" style="display:block;">
-        <h3>Lista banów</h3>
-        <div id="bansList" class="empty-box">Brak banów</div>
-
-        <h4>Dodaj bana</h4>
-        <div class="admin-form">
-          <input type="text" id="banUser" placeholder="Nick / ID" />
-          <input type="text" id="banReason" placeholder="Powód bana" />
-          <input type="date" id="banExpiry" />
-          <button id="addBanBtn">Dodaj bana</button>
-        </div>
-      </div>
-
-      <!-- USERS TAB (placeholder) -->
-      <div class="tab" id="users" style="display:none;">
-        <p>Lista użytkowników / statystyki (w przyszłości)</p>
-      </div>
-
-      <!-- SETTINGS TAB (placeholder) -->
-      <div class="tab" id="settings" style="display:none;">
-        <p>Ustawienia administracyjne</p>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer>
-  <p>© 2025 Project Gmina Siedlce — dc frvvnek_</p>
-</footer>
-
-<audio id="bgMusic" loop>
-  <source src="bgmusic.mp3" type="audio/mpeg">
-</audio>
-
-<!-- Hidden admin login modal (created dynamically by script) -->
-<div id="adminOverlay" class="hidden"></div>
-
-<script src="script.js"></script>
-</body>
-</html>
+  // === DISCORD JSON API ===
+  fetch("https://discord.com/api/guilds/1333095837084946463/widget.json")
+    .then(res => res.json())
+    .then(data => {
+      const discordWidget = document.getElementById("discordWidget");
+      discordWidget.innerHTML = `
+        <p><strong>${data.name}</strong></p>
+        <p>Online: ${data.presence_count}</p>
+        <ul style="margin-top:10px;list-style:none;padding:0;">
+          ${data.members.slice(0,5).map(m => `<li>• ${m.username}</li>`).join('')}
+        </ul>
+        <p style="opacity:0.8;">(Pokazano 5 z ${data.members.length} członków online)</p>
+      `;
+    })
+    .catch(() => {
+      document.getElementById("discordWidget").innerText = "Nie udało się załadować danych z Discorda.";
+    });
+});
