@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   // === COUNTDOWN ===
   const countdownEl = document.getElementById("countdown");
-  const targetDate = new Date("Oct 25, 2025 15:00:00").getTime();
+  const targetDate = new Date("Dec 1, 2025 15:00:00").getTime();
 
   setInterval(() => {
     const now = Date.now();
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     countdownEl.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
   }, 1000);
 
-  // === SECRET ADMIN OPEN (5 CLICKS) ===
+  // === SECRET ADMIN OPEN ===
   let clickCount = 0;
   countdownEl.addEventListener("click", () => {
     clickCount++;
@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // === LOGIN MODAL ===
   function showLoginModal() {
     const overlay = document.getElementById("adminOverlay");
     overlay.innerHTML = `
@@ -54,133 +53,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         const res = await fetch("/api/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, password })
-        });
-        if (res.status === 200) {
-          overlay.classList.add("hidden");
-          overlay.innerHTML = "";
-          showAdminSection();
-        } else {
-          alert("Błędne dane logowania");
-        }
-      } catch (err) {
-        console.error(err);
-        alert("Błąd połączenia z serwerem");
-      }
-    });
-  }
+          method:
 
-  // === ADMIN SECTION ===
-  const adminSection = document.getElementById("adminSection");
-  const bansListEl = document.getElementById("bansList");
-  const addBanBtn = document.getElementById("addBanBtn");
-  const banUserEl = document.getElementById("banUser");
-  const banReasonEl = document.getElementById("banReason");
-  const banExpiryEl = document.getElementById("banExpiry");
-
-  // przełączanie kart (np. Kategorie w panelu)
-  document.querySelectorAll(".tab-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      const tabName = btn.dataset.tab;
-      document.querySelectorAll(".tab").forEach(t => t.style.display = (t.id === tabName ? "block" : "none"));
-    });
-  });
-
-  // pokazanie sekcji admina po zalogowaniu
-  async function showAdminSection() {
-    adminSection.classList.remove("hidden");
-    adminSection.scrollIntoView({ behavior: "smooth" });
-    await loadBans();
-  }
-
-  // === BAN SYSTEM ===
-  async function loadBans() {
-    try {
-      const res = await fetch("/api/bans");
-      if (!res.ok) { bansListEl.innerText = "Błąd ładowania banów"; return; }
-      const bans = await res.json();
-      renderBans(bans);
-    } catch (err) {
-      console.error(err);
-      bansListEl.innerText = "Błąd połączenia z serwerem";
-    }
-  }
-
-  function renderBans(bans) {
-    if (!bans || bans.length === 0) {
-      bansListEl.innerHTML = '<div class="empty-box">Brak banów</div>';
-      return;
-    }
-    bansListEl.innerHTML = "";
-    bans.forEach(b => {
-      const expiry = b.expiresAt ? new Date(b.expiresAt).toLocaleString() : "Brak";
-      const item = document.createElement("div");
-      item.className = "ban-item";
-      item.innerHTML = `
-        <div class="ban-info">
-          <strong>${escapeHtml(b.user)}</strong>
-          <span>${escapeHtml(b.reason)}</span>
-          <small>Wygasa: ${escapeHtml(expiry)}</small>
-          <small style="opacity:0.7">ID: ${b.id}</small>
-        </div>
-        <div class="ban-actions">
-          <button data-id="${b.id}">Usuń</button>
-        </div>
-      `;
-      item.querySelector("button").addEventListener("click", () => removeBan(b.id));
-      bansListEl.appendChild(item);
-    });
-  }
-
-  // dodawanie bana
-  addBanBtn.addEventListener("click", async () => {
-    const user = banUserEl.value.trim();
-    const reason = banReasonEl.value.trim();
-    const expiry = banExpiryEl.value ? new Date(banExpiryEl.value).toISOString() : null;
-    if (!user || !reason) { alert("Wypełnij nick i powód"); return; }
-
-    try {
-      const res = await fetch("/api/bans", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user, reason, expiresAt: expiry })
-      });
-      if (res.ok) {
-        banUserEl.value = "";
-        banReasonEl.value = "";
-        banExpiryEl.value = "";
-        await loadBans();
-      } else {
-        alert("Błąd dodawania bana");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Błąd połączenia z serwerem");
-    }
-  });
-
-  // usuwanie bana
-  async function removeBan(id) {
-    if (!confirm("Na pewno usunąć bana?")) return;
-    try {
-      const res = await fetch(`/api/bans?id=${encodeURIComponent(id)}`, { method: "DELETE" });
-      if (res.ok) await loadBans();
-      else alert("Błąd usuwania");
-    } catch (err) {
-      console.error(err);
-      alert("Błąd połączenia");
-    }
-  }
-
-  // zabezpieczenie przed XSS
-  function escapeHtml(s) {
-    return String(s || "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
-  }
-});
