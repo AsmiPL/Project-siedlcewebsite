@@ -184,3 +184,21 @@ document.addEventListener("DOMContentLoaded", () => {
       .replace(/>/g, "&gt;");
   }
 });
+ // === DISCORD JSON API ===
+  fetch("https://discord.com/api/guilds/1333095837084946463/widget.json")
+    .then(res => res.json())
+    .then(data => {
+      const discordWidget = document.getElementById("discordWidget");
+      discordWidget.innerHTML = `
+        <p><strong>${data.name}</strong></p>
+        <p>Online: ${data.presence_count}</p>
+        <ul style="margin-top:10px;list-style:none;padding:0;">
+          ${data.members.slice(0,5).map(m => `<li>• ${m.username}</li>`).join('')}
+        </ul>
+        <p style="opacity:0.8;">(Pokazano 5 z ${data.members.length} członków online)</p>
+      `;
+    })
+    .catch(() => {
+      document.getElementById("discordWidget").innerText = "Nie udało się załadować danych z Discorda.";
+    });
+});
