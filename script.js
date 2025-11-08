@@ -31,3 +31,4 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("discordWidget").innerText = "Nie udało się załadować danych z Discorda.";
     });
 });
+
