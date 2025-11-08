@@ -26,8 +26,8 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255,0.15), transparent 70%),
-              radial-gradient(circle at 80% 70%, rgba(255,0,100,0.1), transparent 60%);
+  background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255), transparent 70%),
+              radial-gradient(circle at 80% 70%, rgba(255, 255, 255), transparent 60%);
   mix-blend-mode: screen;
   animation: bgPulse 10s ease-in-out infinite alternate;
 }
